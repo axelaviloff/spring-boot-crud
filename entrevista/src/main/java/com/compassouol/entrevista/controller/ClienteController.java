@@ -1,5 +1,6 @@
 package com.compassouol.entrevista.controller;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.compassouol.entrevista.controller.dto.FormCliente;
 import com.compassouol.entrevista.model.Cliente;
+import com.compassouol.entrevista.repository.CidadeRepository;
 import com.compassouol.entrevista.repository.ClienteRepository;
 
 @RestController
@@ -27,11 +30,19 @@ public class ClienteController {
 	@Autowired
 	private ClienteRepository clienteRepository;
 	
+	@Autowired
+	private CidadeRepository cidadeRepository;
+	
 	@PostMapping
 	@Transactional
-	public ResponseEntity<Cliente> cadastrarCliente(@RequestBody @Valid Cliente cliente) {
-		clienteRepository.save(cliente);
-		return ResponseEntity.ok(cliente);
+	public ResponseEntity<Cliente> cadastrarCliente(@RequestBody @Valid FormCliente formCliente) throws ParseException {
+		Cliente cliente = formCliente.toCliente(cidadeRepository);
+		if (cliente != null) {
+			clienteRepository.save(cliente);
+			return ResponseEntity.ok(cliente);
+		}
+		return ResponseEntity.notFound().build();
+		
 	}
 	
 	@GetMapping("buscarPeloNome/{nome}")
