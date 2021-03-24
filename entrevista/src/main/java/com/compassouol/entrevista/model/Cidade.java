@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+
 @Entity
 public class Cidade {
 	
@@ -14,15 +15,13 @@ public class Cidade {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotEmpty(message = "O nome da cidade é obrigatório") 
-	@NotNull
+	@NotNull @NotEmpty(message = "O nome da cidade é obrigatório") 
 	private String nome;
 	
-	@NotEmpty(message = "O estado é obrigatório") 
-	@NotNull
+	@NotNull @NotEmpty(message = "O estado é obrigatório") 
 	private String estado;
 	
-	// Inicio Getters & Setters
+	// Início Getters and Setters
 	public Long getId() {
 		return id;
 	}
@@ -46,6 +45,6 @@ public class Cidade {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
-	// Fim Getters & Setters
+	// Fim Getters and Setters
 	
 }

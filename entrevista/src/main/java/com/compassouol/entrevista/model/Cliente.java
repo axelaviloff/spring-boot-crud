@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @Entity
 public class Cliente {
@@ -17,22 +18,21 @@ public class Cliente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long Id;
 	
-	@NotEmpty(message = "O nome é obrigatório")
-	@NotNull
+	@NotNull @NotEmpty(message = "O nome é obrigatório")
 	private String nome;
 	
-	@NotEmpty(message = "O sexo")
-	@NotNull
+	@NotNull @NotEmpty(message = "O sexo é obrigatório")
 	private String sexo;
 	
 	private Date dataNascimento;
 	
+	@Positive
 	private int idade;
 	
 	@OneToOne
 	private Cidade cidade;
 	
-	// Inicio Getters & Setters
+	// Início Getters and Setters
 	public long getId() {
 		return Id;
 	}
@@ -80,6 +80,6 @@ public class Cliente {
 	public void setCidade(Cidade cidade) {
 		this.cidade = cidade;
 	}
-	// Fim Getters & Setters
+	// Fim Getters and Setters
 	
 }

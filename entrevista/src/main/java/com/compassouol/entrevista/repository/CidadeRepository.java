@@ -12,7 +12,6 @@ import com.compassouol.entrevista.model.Cidade;
 public interface CidadeRepository extends JpaRepository<Cidade, Long>{
 
 	Optional<Cidade> findByNomeIgnoreCase(String nome);
-
 	Optional<List<Cidade>> findByEstadoIgnoreCase(String estado);
 
 

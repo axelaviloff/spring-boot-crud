@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.compassouol.entrevista.controller.dto.FormCliente;
+import com.compassouol.entrevista.controller.dto.FormAlteraCliente;
+import com.compassouol.entrevista.controller.dto.FormCadastroCliente;
 import com.compassouol.entrevista.model.Cliente;
 import com.compassouol.entrevista.repository.CidadeRepository;
 import com.compassouol.entrevista.repository.ClienteRepository;
@@ -35,7 +36,7 @@ public class ClienteController {
 	
 	@PostMapping
 	@Transactional
-	public ResponseEntity<Cliente> cadastrarCliente(@RequestBody @Valid FormCliente formCliente) throws ParseException {
+	public ResponseEntity<Cliente> cadastrarCliente(@RequestBody @Valid FormCadastroCliente formCliente) throws ParseException {
 		Cliente cliente = formCliente.toCliente(cidadeRepository);
 		if (cliente != null) {
 			clienteRepository.save(cliente);
@@ -48,7 +49,7 @@ public class ClienteController {
 	@GetMapping("buscarPeloNome/{nome}")
 	public ResponseEntity<List<Cliente>> buscarClientePeloNome(@PathVariable String nome) {
 		Optional<List<Cliente>> clientes =  clienteRepository.findByNomeIgnoreCase(nome);
-		if (clientes.isPresent()) {
+		if (clientes.isPresent() && !clientes.get().isEmpty()) {
 			return ResponseEntity.ok(clientes.get());
 		}
 		return ResponseEntity.notFound().build();
@@ -61,10 +62,9 @@ public class ClienteController {
 			return ResponseEntity.ok(cliente.get());
 		}
 		return ResponseEntity.notFound().build();
-		
 	}
 	
-	@DeleteMapping("removerCliente/{id}")
+	@DeleteMapping("removerPeloId/{id}")
 	@Transactional
 	public ResponseEntity<Cliente> removerClientePeloId(@PathVariable Long id) {
 		Optional<Cliente> cliente = clienteRepository.findById(id);
@@ -75,20 +75,13 @@ public class ClienteController {
 		return ResponseEntity.notFound().build();
 	}
 	
-	@DeleteMapping("removerCliente")
-	@Transactional
-	public ResponseEntity<Cliente> removerCliente(@RequestBody Cliente cliente) {
-		clienteRepository.delete(cliente);
-		return ResponseEntity.ok(cliente);
-	}
-	
 	
 	@PutMapping
-	public ResponseEntity<Cliente> alterarNomeCliente(@RequestBody @Valid Cliente cliente) {
-		Optional<Cliente> clienteAlterado = clienteRepository.findById(cliente.getId());
+	@Transactional
+	public ResponseEntity<Cliente> alterarNomeCliente(@RequestBody @Valid FormAlteraCliente formCliente) {
+		Optional<Cliente> clienteAlterado = clienteRepository.findById(formCliente.getId());
 		if (clienteAlterado.isPresent()) {
-			clienteAlterado.get().setNome(cliente.getNome());
-			clienteRepository.save(clienteAlterado.get());
+			clienteAlterado.get().setNome(formCliente.getNome());
 			return ResponseEntity.ok(clienteAlterado.get());
 		}
 		return ResponseEntity.notFound().build();
@@ -96,7 +89,4 @@ public class ClienteController {
 	
 	
 	
-	
-	
-
 }

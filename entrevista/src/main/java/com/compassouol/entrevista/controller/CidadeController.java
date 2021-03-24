@@ -44,7 +44,7 @@ public class CidadeController {
 	@GetMapping("/buscarPeloEstado/{estado}")
 	public ResponseEntity<List<Cidade>> buscarCidadePeloEstado(@PathVariable String estado) {
 		Optional<List<Cidade>> cidades = cidadeRepository.findByEstadoIgnoreCase(estado);
-		if (!cidades.isPresent()) {
+		if (cidades.isPresent() && !cidades.get().isEmpty()) {
 			return ResponseEntity.ok(cidades.get());
 		}
 		return ResponseEntity.notFound().build();
