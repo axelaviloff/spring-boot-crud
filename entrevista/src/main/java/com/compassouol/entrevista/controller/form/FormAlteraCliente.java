@@ -1,4 +1,4 @@
-package com.compassouol.entrevista.controller.dto;
+package com.compassouol.entrevista.controller.form;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

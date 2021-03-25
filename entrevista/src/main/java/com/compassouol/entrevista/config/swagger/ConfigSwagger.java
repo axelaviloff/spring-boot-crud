@@ -1,4 +1,4 @@
-package com.compassouol.entrevista.config;
+package com.compassouol.entrevista.config.swagger;
 
 import org.springframework.context.annotation.Bean;
 
@@ -10,11 +10,11 @@ import springfox.documentation.spring.web.plugins.Docket;
 public class ConfigSwagger {
 	
 	@Bean
-    public Docket forumApi() {
+    public Docket EntrevistaApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.compassouol.entrevista"))
-                .paths(PathSelectors.ant("/**"))
-                .build();
+        	.select()
+            .apis(RequestHandlerSelectors.any())
+            .paths(PathSelectors.any())
+            .build();
     }
 }

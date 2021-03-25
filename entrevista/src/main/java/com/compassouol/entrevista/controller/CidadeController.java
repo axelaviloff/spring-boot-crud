@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.compassouol.entrevista.controller.form.FormCadastroCidade;
 import com.compassouol.entrevista.model.Cidade;
 import com.compassouol.entrevista.repository.CidadeRepository;
 
@@ -27,7 +28,8 @@ public class CidadeController {
 
 	@PostMapping
 	@Transactional
-	public ResponseEntity<Cidade> cadastrarCidade(@RequestBody @Valid Cidade cidade) {
+	public ResponseEntity<Cidade> cadastrarCidade(@RequestBody @Valid FormCadastroCidade formCidade) {
+		Cidade cidade = formCidade.toCidade();
 		cidadeRepository.save(cidade);
 		return ResponseEntity.ok(cidade);
 	}

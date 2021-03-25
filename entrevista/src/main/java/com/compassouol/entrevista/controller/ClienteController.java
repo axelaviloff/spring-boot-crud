@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.compassouol.entrevista.controller.dto.FormAlteraCliente;
-import com.compassouol.entrevista.controller.dto.FormCadastroCliente;
+import com.compassouol.entrevista.controller.form.FormAlteraCliente;
+import com.compassouol.entrevista.controller.form.FormCadastroCliente;
 import com.compassouol.entrevista.model.Cliente;
 import com.compassouol.entrevista.repository.CidadeRepository;
 import com.compassouol.entrevista.repository.ClienteRepository;

@@ -7,18 +7,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.compassouol.entrevista.controller.dto.FormCadastroCliente;
 import com.compassouol.entrevista.model.Cidade;
 import com.compassouol.entrevista.model.Cliente;
 import com.compassouol.entrevista.repository.CidadeRepository;
@@ -27,9 +24,7 @@ import com.compassouol.entrevista.repository.ClienteRepository;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-@ActiveProfiles("test") // Carregar o application-test.properties
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class ClienteControllerTest {
 
 	@Autowired
@@ -51,15 +46,13 @@ public class ClienteControllerTest {
 		this.cidade.setNome("Xanxerê");
 		cidadeRepository.save(this.cidade);
 		
-		FormCadastroCliente formCliente = new FormCadastroCliente();
-		formCliente.setCidade("Xanxerê");
-		formCliente.setIdade(18);
-		formCliente.setSexo("Masculino");
-		formCliente.setNome("Abimael");
-		formCliente.setDataNascimento("07/04/1999");
-		this.cliente = formCliente.toCliente(cidadeRepository);
+		this.cliente = new Cliente();
+		this.cliente.setCidade(this.cidade);
+		this.cliente.setIdade(18);
+		this.cliente.setNome("Abimael");
+		this.cliente.setSexo("Masculino");
+		this.cliente.setDataNascimento(null);
 		clienteRepository.save(this.cliente);
-		
 	}
 	
 	
@@ -82,6 +75,7 @@ public class ClienteControllerTest {
 			.andExpect(MockMvcResultMatchers.status().is(404));
 		
 	}
+	
 	
 	@Test
 	public void buscarClientePeloIdDeveRetornar200() throws Exception {
@@ -148,7 +142,7 @@ public class ClienteControllerTest {
 	@Test
 	public void alterarClienteDeveRetornar200() throws Exception {
 		URI uri = new URI("/cliente");
-		String json = "{\"nome\" : \"Axel\", \"id\": 1}";
+		String json = "{\"nome\" : \"Abimael\", \"id\": 1}";
 		mockMvc
 		.perform(MockMvcRequestBuilders
 			.put(uri)
@@ -162,7 +156,7 @@ public class ClienteControllerTest {
 	@Test
 	public void alterarClienteDeveRetornar404() throws Exception {
 		URI uri = new URI("/cliente");
-		String json = "{\"nome\" : \"Axel\", \"id\": 2}";
+		String json = "{\"nome\" : \"Abimael\", \"id\": 2}";
 		mockMvc
 		.perform(MockMvcRequestBuilders
 			.put(uri)
@@ -176,7 +170,7 @@ public class ClienteControllerTest {
 	@Test
 	public void alterarClienteDeveRetornar400() throws Exception {
 		URI uri = new URI("/cliente");
-		String json = "{\"nome\" : \"\", \"id\": 2}";
+		String json = "{\"nome\" : \"\", \"id\": 1}";
 		mockMvc
 		.perform(MockMvcRequestBuilders
 			.put(uri)

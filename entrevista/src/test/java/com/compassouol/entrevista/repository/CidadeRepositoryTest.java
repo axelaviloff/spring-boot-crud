@@ -7,18 +7,14 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.compassouol.entrevista.model.Cidade;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@ActiveProfiles("test") // Carregar o application-test.properties
 public class CidadeRepositoryTest {
 	
 	@Autowired
@@ -85,12 +81,6 @@ public class CidadeRepositoryTest {
 		Assert.assertTrue(cidadeRetornada.isPresent());
 		Assert.assertTrue(cidadeRetornada.get().getEstado().equals("SC"));
 		Assert.assertTrue(cidadeRetornada.get().getNome().equals("Chapecó"));
-	}
-	
-	@Test
-	public void naoDeveBuscarCidadePeloId() {
-		Optional<Cidade> cidadeRetornada = cidadeRepository.findById((long) 1);
-		Assert.assertTrue(!cidadeRetornada.isPresent());
 	}
 	
 }

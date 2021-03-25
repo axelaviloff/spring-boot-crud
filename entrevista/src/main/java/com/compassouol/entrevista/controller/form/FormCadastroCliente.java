@@ -1,4 +1,4 @@
-package com.compassouol.entrevista.controller.dto;
+package com.compassouol.entrevista.controller.form;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
