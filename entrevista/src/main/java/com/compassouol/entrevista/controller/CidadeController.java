@@ -19,6 +19,8 @@ import com.compassouol.entrevista.controller.form.FormCadastroCidade;
 import com.compassouol.entrevista.model.Cidade;
 import com.compassouol.entrevista.repository.CidadeRepository;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/cidade")
 public class CidadeController {
@@ -28,6 +30,7 @@ public class CidadeController {
 
 	@PostMapping
 	@Transactional
+	@ApiOperation(value = "Cadastrar uma cidade")
 	public ResponseEntity<Cidade> cadastrarCidade(@RequestBody @Valid FormCadastroCidade formCidade) {
 		Cidade cidade = formCidade.toCidade();
 		cidadeRepository.save(cidade);
@@ -35,6 +38,7 @@ public class CidadeController {
 	}
 
 	@GetMapping("/buscarPeloNome/{nome}")
+	@ApiOperation(value = "Buscar cidade através do nome")
 	public ResponseEntity<Cidade> buscarCidadePeloNome(@PathVariable String nome) {
 		Optional<Cidade> cidade = cidadeRepository.findByNomeIgnoreCase(nome);
 		if (cidade.isPresent()) {
@@ -44,6 +48,7 @@ public class CidadeController {
 	}
 
 	@GetMapping("/buscarPeloEstado/{estado}")
+	@ApiOperation(value = "Buscar todas cidades de um estado")
 	public ResponseEntity<List<Cidade>> buscarCidadePeloEstado(@PathVariable String estado) {
 		Optional<List<Cidade>> cidades = cidadeRepository.findByEstadoIgnoreCase(estado);
 		if (cidades.isPresent() && !cidades.get().isEmpty()) {
