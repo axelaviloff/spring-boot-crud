@@ -24,6 +24,7 @@ public class Cliente {
 	@NotNull @NotEmpty(message = "O sexo é obrigatório")
 	private String sexo;
 	
+	@NotNull
 	private Date dataNascimento;
 	
 	@Positive

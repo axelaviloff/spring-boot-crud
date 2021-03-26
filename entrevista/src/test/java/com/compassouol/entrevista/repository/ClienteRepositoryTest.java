@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.compassouol.entrevista.controller.form.FormCadastroCidade;
 import com.compassouol.entrevista.controller.form.FormCadastroCliente;
+import com.compassouol.entrevista.model.Cidade;
 import com.compassouol.entrevista.model.Cliente;
 
 @RunWith(SpringRunner.class)
@@ -25,24 +26,16 @@ public class ClienteRepositoryTest {
 	@Autowired
 	private CidadeRepository cidadeRepository;
 	
-	private FormCadastroCliente formCliente = new FormCadastroCliente();
+	private Cliente cliente;
 	
-	private FormCadastroCidade formCidade = new FormCadastroCidade();
-	
+	// Início Testes
 	@Test
 	public void deveriaAcharUmClientePeloNome() throws ParseException {
-		formCidade.setEstado("SC");
-		formCidade.setNome("Chapecó");
-		cidadeRepository.save(formCidade.toCidade());
+		cidadeRepository.save(new FormCadastroCidade("Chapecó", "SC").toCidade());
+		this.cliente = new FormCadastroCliente("Carlos", "Chapecó", "Masculino", "07/04/1999", 20).toCliente(cidadeRepository);
+		clienteRepository.save(this.cliente);
 		
-		formCliente.setIdade(20);
-		formCliente.setNome("Carlos");
-		formCliente.setSexo("Masculino");
-		formCliente.setDataNascimento("07/04/1999");
-		formCliente.setCidade("Chapecó");
-		clienteRepository.save(formCliente.toCliente(cidadeRepository));
-		
-		Optional<List<Cliente>> clientesRetornados = clienteRepository.findByNomeIgnoreCase(formCliente.getNome());
+		Optional<List<Cliente>> clientesRetornados = clienteRepository.findByNomeIgnoreCase(this.cliente.getNome());
 		Assert.assertTrue(clientesRetornados.isPresent());
 		Assert.assertEquals(clientesRetornados.get().size(), 1);
 		Assert.assertEquals(clientesRetornados.get().get(0).getNome(), "Carlos");
@@ -62,19 +55,12 @@ public class ClienteRepositoryTest {
 	
 	@Test
 	public void deveriaAcharUmClientePeloId() throws ParseException {
-		formCidade.setEstado("SC");
-		formCidade.setNome("Chapecó");
-		cidadeRepository.save(formCidade.toCidade());
-		
-		formCliente.setIdade(22);
-		formCliente.setNome("Paula");
-		formCliente.setSexo("Feminino");
-		formCliente.setDataNascimento("07/03/1998");
-		formCliente.setCidade("Chapecó");
-		Cliente c = formCliente.toCliente(cidadeRepository);
-		clienteRepository.save(c);
+		cidadeRepository.save(new FormCadastroCidade("Chapecó", "SC").toCidade());
+		this.cliente = new FormCadastroCliente("Paula", "Chapecó", "Feminino", "07/03/1998", 22).toCliente(cidadeRepository);
+		clienteRepository.save(this.cliente);
+		System.out.println("ID" + this.cliente.getId());
 
-		Optional<Cliente> clienteRetornado = clienteRepository.findById(c.getId());
+		Optional<Cliente> clienteRetornado = clienteRepository.findById(this.cliente.getId());
 		Assert.assertTrue(clienteRetornado.isPresent());
 		Assert.assertTrue(clienteRetornado.get().getNome().equals("Paula"));
 		Assert.assertTrue(clienteRetornado.get().getSexo().equals("Feminino"));

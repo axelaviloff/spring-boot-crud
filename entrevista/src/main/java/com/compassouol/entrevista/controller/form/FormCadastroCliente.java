@@ -23,10 +23,24 @@ public class FormCadastroCliente {
 	@NotNull @NotEmpty(message = "O sexo é obrigatório")
 	private String sexo;
 	
+	@NotNull
 	private String dataNascimento;
 	
 	@Positive
 	private int idade;
+	
+	// Início Construtores
+	public FormCadastroCliente() {
+		
+	}
+	
+	public FormCadastroCliente(String nome, String cidade, String sexo, String dataNascimento, int idade) {
+		this.nome = nome;
+		this.cidade = cidade;
+		this.sexo = sexo;
+		this.dataNascimento = dataNascimento;
+		this.idade = idade;
+	}
 	
 	// Início Getters and Setters
 	public String getNome() {

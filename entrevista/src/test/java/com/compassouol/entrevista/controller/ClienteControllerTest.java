@@ -3,6 +3,7 @@ package com.compassouol.entrevista.controller;
 import java.net.URI;
 import java.text.ParseException;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,26 +41,27 @@ public class ClienteControllerTest {
 	private CidadeRepository cidadeRepository;
 	
 	private Cliente cliente;
+	
 	private Cidade cidade;
 	
+	// Início Testes
 	@Before
 	public void criaClienteECidade() throws ParseException {
-		this.cidade = new Cidade();
-		this.cidade.setEstado("SC");
-		this.cidade.setNome("Xanxerê");
+		FormCadastroCidade formCidade = new FormCadastroCidade("Xanxerê", "SC");
+		this.cidade = formCidade.toCidade();
 		cidadeRepository.save(this.cidade);
 		
-		this.cliente = new Cliente();
-		this.cliente.setCidade(this.cidade);
-		this.cliente.setIdade(18);
-		this.cliente.setNome("Abimael");
-		this.cliente.setSexo("Masculino");
-		this.cliente.setDataNascimento(null);
+		FormCadastroCliente formCliente = new FormCadastroCliente("Abimael", "Xanxerê", "Masculino", "07/04/1999", 20);
+		this.cliente = formCliente.toCliente(cidadeRepository);
 		clienteRepository.save(this.cliente);
 	}
 	
+	@After
+	public void deletaClienteECidade() {
+		clienteRepository.delete(this.cliente);
+		cidadeRepository.delete(this.cidade);
+	}
 
-	
 	@Test
 	public void buscarClientePeloNomeDeveRetornar200() throws Exception {
 		URI uri = new URI("/cliente/buscarPeloNome/Abimael");
@@ -83,7 +85,7 @@ public class ClienteControllerTest {
 	
 	@Test
 	public void buscarClientePeloIdDeveRetornar200() throws Exception {
-		URI uri = new URI("/cliente/buscarPeloId/1");
+		URI uri = new URI("/cliente/buscarPeloId/" + this.cliente.getId());
 		mockMvc
 		.perform(MockMvcRequestBuilders
 			.get(uri))
@@ -98,15 +100,11 @@ public class ClienteControllerTest {
 		.perform(MockMvcRequestBuilders
 			.get(uri))
 			.andExpect(MockMvcResultMatchers.status().is(404));
-		
 	}
 	
 	@Test
 	public void cadastrarClienteDeveRetornar201() throws Exception {
-		Cidade cidadeTeste = new Cidade();
-		cidadeTeste.setNome("Concórdia");
-		cidadeTeste.setEstado("SC");
-		cidadeRepository.save(cidadeTeste);
+		cidadeRepository.save(new FormCadastroCidade("Concórdia", "SC").toCidade());
 		
 		String json = "{\"nome\":\"Axel\",\"sexo\":\"Masculino\",\"dataNascimento\":\"07/04/1999\",\"idade\":\"21\",\"cidade\":\"Concórdia\"}";
 		URI uri = new URI("/cliente");
@@ -193,7 +191,7 @@ public class ClienteControllerTest {
 	
 	@Test
 	public void removerClienteDeveRetornar200() throws Exception {
-		URI uri = new URI("/cliente/removerPeloId/1");
+		URI uri = new URI("/cliente/removerPeloId/" + cliente.getId());
 		mockMvc
 		.perform(MockMvcRequestBuilders
 			.delete(uri))

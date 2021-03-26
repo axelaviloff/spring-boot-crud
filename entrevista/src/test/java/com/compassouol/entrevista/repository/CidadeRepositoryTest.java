@@ -20,18 +20,16 @@ public class CidadeRepositoryTest {
 	@Autowired
 	private CidadeRepository cidadeRepository;
 	
-	private FormCadastroCidade formCidade = new FormCadastroCidade();
+	private Cidade cidade;
 	
+	// Início Teste
 	@Test
 	public void deveBuscarCidadePeloNome() {
-		formCidade.setEstado("SC");
-		formCidade.setNome("Xaxim");
-		Cidade xaxim = formCidade.toCidade();
-		cidadeRepository.save(xaxim);
+		this.cidade = new FormCadastroCidade("Xaxim", "SC").toCidade();
+		cidadeRepository.save(this.cidade);
 		Optional<Cidade> cidadeRetornada = cidadeRepository.findByNomeIgnoreCase("Xaxim");
 		Assert.assertNotNull(cidadeRetornada.get());
-		Assert.assertEquals(xaxim.getNome(), cidadeRetornada.get().getNome());
-		
+		Assert.assertEquals(this.cidade.getNome(), cidadeRetornada.get().getNome());
 	}
 	
 	@Test
@@ -42,20 +40,15 @@ public class CidadeRepositoryTest {
 	
 	@Test
 	public void deveBuscarCidadesPeloEstado() {
-		formCidade.setEstado("RS");
-		formCidade.setNome("Pelotas");
-		Cidade pelotas = formCidade.toCidade();
+		this.cidade = new FormCadastroCidade("Pelotas", "RS").toCidade();
+		cidadeRepository.save(this.cidade);
 		
-		formCidade.setNome("Canoas");
-		Cidade canoas = formCidade.toCidade();
+		this.cidade = new FormCadastroCidade("Canoas", "RS").toCidade();
+		cidadeRepository.save(this.cidade);
 		
-		formCidade.setNome("Canela");
-		Cidade canela = formCidade.toCidade();
+		this.cidade = new FormCadastroCidade("Canela", "RS").toCidade();
+		cidadeRepository.save(this.cidade);
 
-		cidadeRepository.save(pelotas);
-		cidadeRepository.save(canoas);
-		cidadeRepository.save(canela);
-		
 		Optional<List<Cidade>> cidadesRetornada = cidadeRepository.findByEstadoIgnoreCase("RS");
 		Assert.assertEquals(cidadesRetornada.get().get(0).getNome(), "Pelotas");
 		Assert.assertEquals(cidadesRetornada.get().get(1).getNome(), "Canoas");
@@ -71,12 +64,10 @@ public class CidadeRepositoryTest {
 	
 	@Test
 	public void deveBuscarCidadePeloId() {
-		formCidade.setEstado("SC");
-		formCidade.setNome("Chapecó");
-		Cidade chapeco = formCidade.toCidade();
-		cidadeRepository.save(chapeco);
+		this.cidade = new FormCadastroCidade("Chapecó", "SC").toCidade();
+		cidadeRepository.save(this.cidade);
 		
-		Optional<Cidade> cidadeRetornada = cidadeRepository.findById(chapeco.getId());
+		Optional<Cidade> cidadeRetornada = cidadeRepository.findById(this.cidade.getId());
 		Assert.assertTrue(cidadeRetornada.isPresent());
 		Assert.assertTrue(cidadeRetornada.get().getEstado().equals("SC"));
 		Assert.assertTrue(cidadeRetornada.get().getNome().equals("Chapecó"));

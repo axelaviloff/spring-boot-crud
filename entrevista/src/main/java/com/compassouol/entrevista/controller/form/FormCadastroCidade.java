@@ -13,6 +13,16 @@ public class FormCadastroCidade {
 	@NotNull @NotEmpty(message = "O estado é obrigatório") 
 	private String estado;
 	
+	// Início Construtores
+	public FormCadastroCidade() {
+		
+	}
+	
+	public FormCadastroCidade(String nome, String estado) {
+		this.nome = nome;
+		this.estado = estado;
+	}
+	
 	// Início Getters and Setters
 	public String getNome() {
 		return nome;

@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import com.compassouol.entrevista.controller.form.FormCadastroCidade;
 import com.compassouol.entrevista.model.Cidade;
 import com.compassouol.entrevista.repository.CidadeRepository;
 
@@ -27,7 +28,8 @@ public class CidadeControllerTest {
 	
 	@Autowired
 	private CidadeRepository cidadeRepository;
-
+	
+	private Cidade cidade;
 	
 	@Test
 	public void consultarCidadePeloNomeDeveRetornar200() throws Exception {
@@ -111,13 +113,8 @@ public class CidadeControllerTest {
 		
 	}
 	
-
 	private void criarESalvarCidade(String nome, String estado) {
-		Cidade cidade = new Cidade();
-		cidade.setNome(nome);
-		cidade.setEstado(estado);
-		cidadeRepository.save(cidade);
+		cidadeRepository.save(new FormCadastroCidade(nome, estado).toCidade());
 	}
-
 
 }
