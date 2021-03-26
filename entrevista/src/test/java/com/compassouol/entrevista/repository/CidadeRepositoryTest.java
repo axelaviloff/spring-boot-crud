@@ -8,9 +8,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.compassouol.entrevista.controller.form.FormCadastroCidade;
 import com.compassouol.entrevista.model.Cidade;
 
 @RunWith(SpringRunner.class)
@@ -20,15 +20,14 @@ public class CidadeRepositoryTest {
 	@Autowired
 	private CidadeRepository cidadeRepository;
 	
-	@Autowired
-	private TestEntityManager em;
+	private FormCadastroCidade formCidade = new FormCadastroCidade();
 	
 	@Test
 	public void deveBuscarCidadePeloNome() {
-		Cidade xaxim = new Cidade();
-		xaxim.setEstado("SC");
-		xaxim.setNome("Xaxim");
-		em.persist(xaxim);
+		formCidade.setEstado("SC");
+		formCidade.setNome("Xaxim");
+		Cidade xaxim = formCidade.toCidade();
+		cidadeRepository.save(xaxim);
 		Optional<Cidade> cidadeRetornada = cidadeRepository.findByNomeIgnoreCase("Xaxim");
 		Assert.assertNotNull(cidadeRetornada.get());
 		Assert.assertEquals(xaxim.getNome(), cidadeRetornada.get().getNome());
@@ -43,19 +42,19 @@ public class CidadeRepositoryTest {
 	
 	@Test
 	public void deveBuscarCidadesPeloEstado() {
-		Cidade pelotas = new Cidade();
-		pelotas.setEstado("RS");
-		pelotas.setNome("Pelotas");
-		Cidade canoas = new Cidade();
-		canoas.setEstado("RS");
-		canoas.setNome("Canoas");
-		Cidade canela = new Cidade();
-		canela.setEstado("RS");
-		canela.setNome("Canela");
-;
-		em.persist(pelotas);
-		em.persist(canoas);
-		em.persist(canela);
+		formCidade.setEstado("RS");
+		formCidade.setNome("Pelotas");
+		Cidade pelotas = formCidade.toCidade();
+		
+		formCidade.setNome("Canoas");
+		Cidade canoas = formCidade.toCidade();
+		
+		formCidade.setNome("Canela");
+		Cidade canela = formCidade.toCidade();
+
+		cidadeRepository.save(pelotas);
+		cidadeRepository.save(canoas);
+		cidadeRepository.save(canela);
 		
 		Optional<List<Cidade>> cidadesRetornada = cidadeRepository.findByEstadoIgnoreCase("RS");
 		Assert.assertEquals(cidadesRetornada.get().get(0).getNome(), "Pelotas");
@@ -72,10 +71,10 @@ public class CidadeRepositoryTest {
 	
 	@Test
 	public void deveBuscarCidadePeloId() {
-		Cidade chapeco = new Cidade();
-		chapeco.setEstado("SC");
-		chapeco.setNome("Chapecó");
-		em.persist(chapeco);
+		formCidade.setEstado("SC");
+		formCidade.setNome("Chapecó");
+		Cidade chapeco = formCidade.toCidade();
+		cidadeRepository.save(chapeco);
 		
 		Optional<Cidade> cidadeRetornada = cidadeRepository.findById(chapeco.getId());
 		Assert.assertTrue(cidadeRetornada.isPresent());
