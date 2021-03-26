@@ -1,5 +1,6 @@
 package com.compassouol.entrevista.controller;
 
+import java.net.URI;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.compassouol.entrevista.controller.form.FormAlteraCliente;
 import com.compassouol.entrevista.controller.form.FormCadastroCliente;
@@ -39,14 +41,14 @@ public class ClienteController {
 	@PostMapping
 	@Transactional
 	@ApiOperation(value = "Cadastrar um cliente")
-	public ResponseEntity<Cliente> cadastrarCliente(@RequestBody @Valid FormCadastroCliente formCliente) throws ParseException {
+	public ResponseEntity<FormCadastroCliente> cadastrarCliente(@RequestBody @Valid FormCadastroCliente formCliente, UriComponentsBuilder uriBuilder) throws ParseException {
 		Cliente cliente = formCliente.toCliente(cidadeRepository);
 		if (cliente != null) {
 			clienteRepository.save(cliente);
-			return ResponseEntity.ok(cliente);
+			URI uri = uriBuilder.path("/cliente/buscarPeloNome/{nome}").buildAndExpand(formCliente.getNome()).toUri();
+			return ResponseEntity.created(uri).body(formCliente);
 		}
 		return ResponseEntity.notFound().build();
-		
 	}
 	
 	@GetMapping("buscarPeloNome/{nome}")

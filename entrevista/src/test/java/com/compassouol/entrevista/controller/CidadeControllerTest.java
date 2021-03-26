@@ -1,13 +1,12 @@
 package com.compassouol.entrevista.controller;
-
 import java.net.URI;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -18,7 +17,9 @@ import com.compassouol.entrevista.repository.CidadeRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
+@TestPropertySource(locations="classpath:application-test.properties")
+
 public class CidadeControllerTest {
 	
 	@Autowired
@@ -78,7 +79,7 @@ public class CidadeControllerTest {
 	}
 	
 	@Test
-	public void salvarCidadeRetorna200() throws Exception {
+	public void salvarCidadeRetorna201() throws Exception {
 		URI uri = new URI("/cidade");
 		
 		String json = "{\"nome\":\"Xaxim\",\"estado\":\"SC\"}";
@@ -90,12 +91,11 @@ public class CidadeControllerTest {
 			.contentType(MediaType.APPLICATION_JSON))
 			.andExpect(MockMvcResultMatchers
 			.status()
-			.is(200));
-		
+			.is(201));
 	}
 	
 	@Test
-	public void salvarCidadeRetorna404() throws Exception {
+	public void salvarCidadeRetorna400() throws Exception {
 		URI uri = new URI("/cidade");
 		
 		String json = "{\"nome\":\"\",\"estado\":\"SC\"}";

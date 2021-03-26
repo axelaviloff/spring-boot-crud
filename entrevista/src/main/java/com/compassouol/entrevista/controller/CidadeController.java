@@ -1,5 +1,6 @@
 package com.compassouol.entrevista.controller;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.compassouol.entrevista.controller.form.FormCadastroCidade;
 import com.compassouol.entrevista.model.Cidade;
@@ -31,10 +33,11 @@ public class CidadeController {
 	@PostMapping
 	@Transactional
 	@ApiOperation(value = "Cadastrar uma cidade")
-	public ResponseEntity<Cidade> cadastrarCidade(@RequestBody @Valid FormCadastroCidade formCidade) {
+	public ResponseEntity<FormCadastroCidade> cadastrarCidade(@RequestBody @Valid FormCadastroCidade formCidade, UriComponentsBuilder uriBuilder) {
 		Cidade cidade = formCidade.toCidade();
 		cidadeRepository.save(cidade);
-		return ResponseEntity.ok(cidade);
+		URI uri = uriBuilder.path("/cidade/buscarPeloNome/{nome}").buildAndExpand(cidade.getNome()).toUri();
+		return ResponseEntity.created(uri).body(formCidade);
 	}
 
 	@GetMapping("/buscarPeloNome/{nome}")

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -24,7 +25,8 @@ import com.compassouol.entrevista.repository.ClienteRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
+@TestPropertySource(locations="classpath:application-test.properties")
 //@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD) -- Maven Test ignora essa anotação
 public class ClienteControllerTest {
 
@@ -46,15 +48,6 @@ public class ClienteControllerTest {
 		this.cidade.setEstado("SC");
 		this.cidade.setNome("Xanxerê");
 		cidadeRepository.save(this.cidade);
-		
-//		FormCadastroCliente formCliente = new FormCadastroCliente();
-//		formCliente.setSexo("Masculino");
-//		formCliente.setIdade(18);
-//		formCliente.setCidade("Xanxerê");
-//		formCliente.setDataNascimento("07/04/1999");
-//		formCliente.setNome("Abimael");
-//		
-//		this.cliente = formCliente.toCliente(cidadeRepository);
 		
 		this.cliente = new Cliente();
 		this.cliente.setCidade(this.cidade);
@@ -109,7 +102,7 @@ public class ClienteControllerTest {
 	}
 	
 	@Test
-	public void cadastrarClienteDeveRetornar200() throws Exception {
+	public void cadastrarClienteDeveRetornar201() throws Exception {
 		Cidade cidadeTeste = new Cidade();
 		cidadeTeste.setNome("Concórdia");
 		cidadeTeste.setEstado("SC");
@@ -124,7 +117,7 @@ public class ClienteControllerTest {
 			.contentType(MediaType.APPLICATION_JSON))
 			.andExpect(MockMvcResultMatchers
 			.status()
-			.is(200));
+			.is(201));
 	}
 	
 	@Test
