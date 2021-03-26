@@ -29,8 +29,7 @@ public class CidadeControllerTest {
 	@Autowired
 	private CidadeRepository cidadeRepository;
 	
-	private Cidade cidade;
-	
+	// Início Testes
 	@Test
 	public void consultarCidadePeloNomeDeveRetornar200() throws Exception {
 		criarESalvarCidade("Itapema", "SC");
