@@ -32,21 +32,21 @@ The app will start running at <http://localhost:8080>.
 
 ## Explore Rest APIs
 * ### Using Swagger Documentation
-   >  Run the application.
-   >> Access http://localhost:8080/swagger-ui.html.
+   *  Run the application.
+      * Access http://localhost:8080/swagger-ui.html.
       
 * ### Resume
-   >  #### Cidade
-      >> * :green_book: POST /cidade
-      >> * :blue_book: GET /cidade/buscarPeloEstado/{estado}
-      >> * :blue_book: GET /cidade/buscarPeloNome/{nome}
+   *  #### Cidade
+       * :green_book: POST /cidade
+       * :blue_book: GET /cidade/buscarPeloEstado/{estado}
+       * :blue_book: GET /cidade/buscarPeloNome/{nome}
 
-  >  #### Cliente
-      >> * :green_book: POST /cliente
-      >> * :orange_book: PUT /cliente
-      >> * :blue_book: GET /cliente/buscarPeloId/{id}
-      >> * :blue_book: GET /cliente/buscarPeloNome/{nome}
-      >> * :closed_book: DELETE /cliente/removerPeloId/{id}
+  *  #### Cliente
+       * :green_book: POST /cliente
+       * :orange_book: PUT /cliente
+       * :blue_book: GET /cliente/buscarPeloId/{id}
+       * :blue_book: GET /cliente/buscarPeloNome/{nome}
+       * :closed_book: DELETE /cliente/removerPeloId/{id}
    ######
    * You can test them using postman or any other rest client.
 
