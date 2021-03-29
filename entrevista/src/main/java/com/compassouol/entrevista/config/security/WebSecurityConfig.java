@@ -15,10 +15,21 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	private static final String[] AUTH_WHITELIST = {
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            "/v3/api-docs/**",
+            "/swagger-ui/**"
+    };
+	
 	//Configuracoes de autorizacao
 	@Override
     protected void configure(final HttpSecurity http) throws Exception {
-		http.headers().frameOptions().disable();
 		http.httpBasic().and()
         .csrf().disable()
         .authorizeRequests()
@@ -26,6 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET, "/cliente/**").permitAll()
         .antMatchers("/h2-console/**").permitAll()
         .anyRequest().authenticated()
+        .and().headers().frameOptions().disable()
         .and().formLogin().permitAll()
         .and().logout()
         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
@@ -50,6 +62,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     //Configuracoes de recursos estaticos(js, css, imagens, etc.)
   	@Override
   	public void configure(WebSecurity web) throws Exception {
-  		web.ignoring().antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**");
+  		web.ignoring().antMatchers(AUTH_WHITELIST);
   	}
 }

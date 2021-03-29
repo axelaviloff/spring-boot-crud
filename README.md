@@ -11,7 +11,7 @@
 
 **1. Clone the application**
 
-```bash
+```shell
 $ git clone https://github.com/axelaviloff/EntrevistaSpringBoot.git
 ```
 
@@ -47,6 +47,6 @@ The app will start running at <http://localhost:8080>.
        * :blue_book: GET /cliente/buscarPeloId/{id}
        * :blue_book: GET /cliente/buscarPeloNome/{nome}
        * :closed_book: DELETE /cliente/removerPeloId/{id}
-   ######
+   #####
    * You can test them using postman or any other rest client.
 
