@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 import com.compassouol.entrevista.model.Cliente;
 
 @Repository
-public interface ClienteRepository extends JpaRepository<Cliente, Long>{
+public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
 	Optional<List<Cliente>> findByNomeIgnoreCase(String nome);
-	
+
 }

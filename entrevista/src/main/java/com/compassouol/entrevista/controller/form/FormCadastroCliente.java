@@ -14,26 +14,29 @@ import com.compassouol.entrevista.repository.CidadeRepository;
 
 public class FormCadastroCliente {
 
-	@NotNull @NotEmpty(message = "O nome é obrigatório")
+	@NotNull
+	@NotEmpty(message = "O nome é obrigatório")
 	private String nome;
 
-	@NotNull @NotEmpty(message = "O nome da cidade é obrigatório")
+	@NotNull
+	@NotEmpty(message = "O nome da cidade é obrigatório")
 	private String cidade;
 
-	@NotNull @NotEmpty(message = "O sexo é obrigatório")
+	@NotNull
+	@NotEmpty(message = "O sexo é obrigatório")
 	private String sexo;
-	
+
 	@NotNull
 	private String dataNascimento;
-	
+
 	@Positive
 	private int idade;
-	
+
 	// Início Construtores
 	public FormCadastroCliente() {
-		
+
 	}
-	
+
 	public FormCadastroCliente(String nome, String cidade, String sexo, String dataNascimento, int idade) {
 		this.nome = nome;
 		this.cidade = cidade;
@@ -41,7 +44,7 @@ public class FormCadastroCliente {
 		this.dataNascimento = dataNascimento;
 		this.idade = idade;
 	}
-	
+
 	// Início Getters and Setters
 	public String getNome() {
 		return nome;

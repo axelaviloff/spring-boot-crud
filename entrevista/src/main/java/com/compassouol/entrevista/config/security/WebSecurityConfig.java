@@ -46,7 +46,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
     	auth.inMemoryAuthentication()
-        	.withUser("teste").password("{noop}teste").roles("ADMIN");
+        	.withUser("teste")
+        	.password("{noop}teste")
+        	.roles("ADMIN");
     } 
     
     @Bean
@@ -54,7 +56,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         @SuppressWarnings("deprecation")
 		User.UserBuilder users = User.withDefaultPasswordEncoder();
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(users.username("teste").password("teste").roles("ADMIN").build());
+        manager
+        	.createUser(users
+				.username("teste")
+				.password("teste")
+				.roles("ADMIN").build());
 
         return manager;
 

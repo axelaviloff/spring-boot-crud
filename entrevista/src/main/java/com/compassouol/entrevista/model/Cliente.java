@@ -13,26 +13,28 @@ import javax.validation.constraints.Positive;
 
 @Entity
 public class Cliente {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long Id;
-	
-	@NotNull @NotEmpty(message = "O nome é obrigatório")
+
+	@NotNull
+	@NotEmpty(message = "O nome é obrigatório")
 	private String nome;
-	
-	@NotNull @NotEmpty(message = "O sexo é obrigatório")
+
+	@NotNull
+	@NotEmpty(message = "O sexo é obrigatório")
 	private String sexo;
-	
+
 	@NotNull
 	private Date dataNascimento;
-	
+
 	@Positive
 	private int idade;
-	
+
 	@OneToOne
 	private Cidade cidade;
-	
+
 	// Início Getters and Setters
 	public long getId() {
 		return Id;
@@ -82,5 +84,5 @@ public class Cliente {
 		this.cidade = cidade;
 	}
 	// Fim Getters and Setters
-	
+
 }

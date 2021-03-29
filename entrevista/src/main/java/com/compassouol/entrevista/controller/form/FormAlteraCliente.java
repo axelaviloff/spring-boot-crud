@@ -7,9 +7,10 @@ public class FormAlteraCliente {
 
 	private Long id;
 
-	@NotNull @NotEmpty(message = "O nome é obrigatório")
+	@NotNull
+	@NotEmpty(message = "O nome é obrigatório")
 	private String nome;
-	
+
 	// Início Getters and Setters
 	public String getNome() {
 		return nome;

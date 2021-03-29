@@ -9,9 +9,10 @@ import org.springframework.stereotype.Repository;
 import com.compassouol.entrevista.model.Cidade;
 
 @Repository
-public interface CidadeRepository extends JpaRepository<Cidade, Long>{
+public interface CidadeRepository extends JpaRepository<Cidade, Long> {
 
 	Optional<Cidade> findByNomeIgnoreCase(String nome);
+
 	Optional<List<Cidade>> findByEstadoIgnoreCase(String estado);
 
 }

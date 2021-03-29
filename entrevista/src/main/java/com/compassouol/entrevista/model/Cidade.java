@@ -9,17 +9,19 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 public class Cidade {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@NotNull @NotEmpty(message = "O nome da cidade é obrigatório") 
+
+	@NotNull
+	@NotEmpty(message = "O nome da cidade é obrigatório")
 	private String nome;
-	
-	@NotNull @NotEmpty(message = "O estado é obrigatório") 
+
+	@NotNull
+	@NotEmpty(message = "O estado é obrigatório")
 	private String estado;
-	
+
 	// Início Getters and Setters
 	public Long getId() {
 		return id;
@@ -45,5 +47,5 @@ public class Cidade {
 		this.estado = estado;
 	}
 	// Fim Getters and Setters
-	
+
 }

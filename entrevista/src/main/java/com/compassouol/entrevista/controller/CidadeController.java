@@ -1,8 +1,6 @@
 package com.compassouol.entrevista.controller;
 
-import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -19,7 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.compassouol.entrevista.controller.form.FormCadastroCidade;
 import com.compassouol.entrevista.model.Cidade;
-import com.compassouol.entrevista.repository.CidadeRepository;
+import com.compassouol.entrevista.service.CidadeService;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -28,36 +26,26 @@ import io.swagger.annotations.ApiOperation;
 public class CidadeController {
 
 	@Autowired
-	private CidadeRepository cidadeRepository;
+	private CidadeService cidadeService;
 
 	@PostMapping
 	@Transactional
 	@ApiOperation(value = "Cadastrar uma cidade")
-	public ResponseEntity<FormCadastroCidade> cadastrarCidade(@RequestBody @Valid FormCadastroCidade formCidade, UriComponentsBuilder uriBuilder) {
-		Cidade cidade = formCidade.toCidade();
-		cidadeRepository.save(cidade);
-		URI uri = uriBuilder.path("/cidade/buscarPeloNome/{nome}").buildAndExpand(cidade.getNome()).toUri();
-		return ResponseEntity.created(uri).body(formCidade);
+	public ResponseEntity<FormCadastroCidade> cadastrarCidade(@RequestBody @Valid FormCadastroCidade formCidade,
+			UriComponentsBuilder uriBuilder) {
+		return cidadeService.cadastrarCidade(formCidade, uriBuilder);
 	}
 
 	@GetMapping("/buscarPeloNome/{nome}")
 	@ApiOperation(value = "Buscar cidade através do nome")
 	public ResponseEntity<Cidade> buscarCidadePeloNome(@PathVariable String nome) {
-		Optional<Cidade> cidade = cidadeRepository.findByNomeIgnoreCase(nome);
-		if (cidade.isPresent()) {
-			return ResponseEntity.ok(cidade.get());
-		}
-		return ResponseEntity.notFound().build();
+		return cidadeService.buscarCidadePeloNome(nome);
 	}
 
 	@GetMapping("/buscarPeloEstado/{estado}")
 	@ApiOperation(value = "Buscar todas cidades de um estado")
 	public ResponseEntity<List<Cidade>> buscarCidadePeloEstado(@PathVariable String estado) {
-		Optional<List<Cidade>> cidades = cidadeRepository.findByEstadoIgnoreCase(estado);
-		if (cidades.isPresent() && !cidades.get().isEmpty()) {
-			return ResponseEntity.ok(cidades.get());
-		}
-		return ResponseEntity.notFound().build();
+		return cidadeService.buscarCidadePeloEstado(estado);
 	}
 
 }
