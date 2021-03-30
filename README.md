@@ -1,41 +1,41 @@
-# EntrevistaSpringBoot
+# Entrevista SpringBoot
 :rocket: Entrevista SpringBoot Compasso UOL :rocket:
 
-## Requirements
+## Requerimentos
 
 > 1. Java :coffee: - 1.8.x
 
 > 2. Maven - 3.x.x
 
-## Steps to Setup
+## Passos para configurar
 
-**1. Clone the application**
+**1. Clone o Projeto**
 
 ```shell
 $ git clone https://github.com/axelaviloff/EntrevistaSpringBoot.git
 ```
 
-**2. Test the app using maven**
-```bash
+**2. Teste a aplicação utilizando Maven**
+```shell
 $ mvn clean test
 
 ```
 
-**3. Build and run the app using maven**
+**3. Construa e rode a aplicação utilizando Maven**
 
-```bash
+```shell
 $ mvn package
 $ java -jar target/entrevista-0.0.1-SNAPSHOT.jar
 ```
 
-The app will start running at <http://localhost:8080>.
+A aplicação irá rodar em <http://localhost:8080>.
 
-## Explore Rest APIs
-* ### Using Swagger Documentation
-   *  Run the application.
-      * Access http://localhost:8080/swagger-ui.html.
+## Explore as Rest APIs
+* ### Usando a documentação do Swagger
+   *  Rode a aplicação.
+      * Acesse http://localhost:8080/swagger-ui.html.
       
-* ### Resume
+* ### Resumo dos endpoints
    *  #### Cidade
        * :green_book: POST /cidade
        * :blue_book: GET /cidade/buscarPeloEstado/{estado}
@@ -48,5 +48,5 @@ The app will start running at <http://localhost:8080>.
        * :blue_book: GET /cliente/buscarPeloNome/{nome}
        * :closed_book: DELETE /cliente/removerPeloId/{id}
    #####
-   * You can test them using postman or any other rest client.
+   * Você também pode testar a aplicação usando Postman ou qualquer outro cliente Rest
 
