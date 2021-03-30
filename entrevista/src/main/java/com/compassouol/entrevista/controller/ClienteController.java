@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -48,14 +49,14 @@ public class ClienteController {
 
 	@GetMapping("buscarPeloId/{id}")
 	@ApiOperation(value = "Buscar cliente pelo id")
-	public ResponseEntity<Cliente> buscarClientePeloId(@PathVariable Long id) {
+	public ResponseEntity<Cliente> buscarClientePeloId(@PathVariable @Min(1) Long id) {
 		return clienteService.buscarClientePeloId(id);
 	}
 
 	@DeleteMapping("removerPeloId/{id}")
 	@Transactional
 	@ApiOperation(value = "Remover cliente pelo id")
-	public ResponseEntity<Cliente> removerClientePeloId(@PathVariable Long id) {
+	public ResponseEntity<Cliente> removerClientePeloId(@PathVariable @Min(1) Long id) {
 		return clienteService.removerClientePeloId(id);
 	}
 

@@ -1,5 +1,6 @@
 package com.compassouol.entrevista.controller;
 import java.net.URI;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.compassouol.entrevista.controller.form.FormCadastroCidade;
-import com.compassouol.entrevista.model.Cidade;
 import com.compassouol.entrevista.repository.CidadeRepository;
 
 @RunWith(SpringRunner.class)
