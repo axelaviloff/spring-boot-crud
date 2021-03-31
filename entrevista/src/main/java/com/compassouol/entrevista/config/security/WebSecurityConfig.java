@@ -12,7 +12,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
-	//Configuracoes de autorizacao
+	//Configuracoes de autorização
 	@Override
     protected void configure(final HttpSecurity http) throws Exception {
 		http
@@ -29,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	        .and().csrf().disable();
     }
 	
-	//Configuracoes de autenticacao
+	//Configuracoes de autenticação
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
     	auth.inMemoryAuthentication()
@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         	.roles("ADMIN");
     } 
 
-    //Configuracoes de recursos estaticos(js, css, imagens, etc.)
+    //Configuracoes de recursos estáticos(js, css, imagens, etc.)
   	@Override
   	public void configure(WebSecurity web) throws Exception {
   		web.ignoring().antMatchers("/v2/api-docs",

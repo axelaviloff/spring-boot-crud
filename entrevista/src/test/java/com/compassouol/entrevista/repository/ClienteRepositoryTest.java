@@ -13,7 +13,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.compassouol.entrevista.controller.form.FormCadastroCidade;
 import com.compassouol.entrevista.controller.form.FormCadastroCliente;
-import com.compassouol.entrevista.model.Cidade;
 import com.compassouol.entrevista.model.Cliente;
 
 @RunWith(SpringRunner.class)

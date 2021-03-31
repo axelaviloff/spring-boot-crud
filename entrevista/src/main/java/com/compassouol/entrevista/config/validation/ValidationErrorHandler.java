@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ValidationErrorHandler {
 	
 	@Autowired
-	private MessageSource messaSource;
+	private MessageSource messageSource;
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<List<ErrorFormDto>> handleException(MethodArgumentNotValidException exception) {
 		List<ErrorFormDto> dto = new ArrayList<ErrorFormDto>();
 		List<FieldError> fieldErros = exception.getBindingResult().getFieldErrors();
 		for (FieldError error : fieldErros) {
-			String msg = messaSource.getMessage(error, LocaleContextHolder.getLocale());
+			String msg = messageSource.getMessage(error, LocaleContextHolder.getLocale());
 			ErrorFormDto erro = new ErrorFormDto(error.getField(), msg, LocalDate.now());
 			dto.add(erro);
 		}
