@@ -11,6 +11,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 public class Cliente {
 
@@ -27,6 +29,7 @@ public class Cliente {
 	private String sexo;
 
 	@NotNull
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date dataNascimento;
 
 	@Positive
